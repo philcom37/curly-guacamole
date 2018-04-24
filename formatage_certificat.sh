@@ -8,4 +8,7 @@ for user in `ls *.pem`
 do
 # formatage du certificat avec ajout de commentaires en début de PEM pour faciliter la lecture du certificat
 openssl x509 -in $user -text -noout | egrep -i "issuer:|subject:" | sed 's/^ */#/' > ../$repertoire_resultat/$user-RESUME.pem;
+openssl x509 -in $user -text -noout | egrep -i "not before|not after|dns:" | sed 's/^ */#/' >> ../$repertoire_resultat/$user-RESUME.pem; 
+openssl x509 -in $user -text -noout | egrep -i "public-key:" | sed 's/^ */#/' >> ../$repertoire_resultat/$user-RESUME.pem;
+openssl x509 -in $user -fingerprint -noout | sed 's/^ */#/' >> ../$repertoire_resultat/$user-RESUME.pem;
 done
